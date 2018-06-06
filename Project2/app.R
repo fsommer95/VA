@@ -1,4 +1,4 @@
-library(devtools)
+#library(devtools)
 library(shiny)
 library(shinydashboard)
 library(DT)
@@ -134,70 +134,24 @@ server<-function(input,output){
       return(x)
       })
     
-#k-means clustering
-#http://www.sthda.com/english/wiki/print.php?id=236
-#####################################################################################################################################################
-    #cluster <- reactive({ 
-    #  cluster::pam( popularity_rank_frame_filled_reshape(), input$centroids) 
-    #  print(cluster::pam( popularity_rank_frame_filled_reshape(), input$centroids) )
-    #})
-    
-    cluster <- reactive({ 
-      print("clutering!!!")
-      #Data preparation and descriptive statistic
-      df <- popularity_rank_frame_filled_reshape()
-      print(df)
-      print("scale")
-      #df <- scale(df)
-      print(df)
 
-      #Determine the number of optimal clusters in the data
-      #Compute k-means clustering
-      set.seed(123)
-      print("km.res")
-      km.res <- pam(df, input$centroids)  
-      print(km.res)
-      
-      print("aggregate")
-      aggregate(popularity_rank_frame_filled_reshape(), by=list(cluster=km.res$cluster), mean)
-      print(aggregate(popularity_rank_frame_filled_reshape(), by=list(cluster=km.res$cluster), mean))  
-      
-      #print data
-      print(fviz_cluster(km.res, df))
-      return(km.re)
-      
-      
-    }) 
- 
-    
-
-    
-        
-######################################################################################################################################################    
-  
   
   test <- reactive({ 
     data.frame( popularity_rank_frame_filled_reshape())
     
   })
   
-  
- ## test2 <- reactive({ 
-##    data.frame( cluster()  )
-  ##    })
+
   
   output$Prepared_Data <- renderDT(
     test(),
     options = list(lengthChange = FALSE),
     rownames = FALSE)
   
-  output$Prepared_Data1 <- renderDT(
-    cluster(),
-    options = list(lengthChange = FALSE),
-    rownames = FALSE)
+
 }
 
-output$clustering <- fviz_cluster(clustering, popularity_rank_frame_filled_reshape())
+#output$clustering <- fviz_cluster(clustering, popularity_rank_frame_filled_reshape())
 
 
 shinyApp(ui=ui, server=server)
